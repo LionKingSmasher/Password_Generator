@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QListWidgetItem>
+#include <QTableWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,6 +21,8 @@ private slots:
     void on_GenButton_clicked();
 
     void on_GenDataBase_itemClicked(QListWidgetItem *item);
+
+    void on_password_database_itemClicked(QTableWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;

@@ -5,6 +5,7 @@
 #include <random>
 #include <time.h>
 #include <stdlib.h>
+#include <QDebug>
 #include <QMessageBox>
 
 #define DEBUG 1
@@ -27,10 +28,12 @@ static int chk_ZERO(int* __1){
 
 QString Generate_Random(QString _1, unsigned __2){
     unsigned int __t = (unsigned int)time(0);
+    static unsigned char __c[10] = {0x10, 0x0e, 0x3e, 0xee, 0xf1, 0x1f, 0x4a, 0x56, 0x7b, 0x9c};
     //****************random*******************
-    std::mt19937_64 engine(__t+__2); //mt19937 random engine
+    std::mt19937_64 engine(__t^__2 ^__c[__2%10]); //mt19937 random engine
     std::uniform_int_distribution<unsigned long long> __dist(0, _1.size()-1);
     //*****************************************
+    __c[__2%10] ^= __c[(__2+1)%10];
 
 //  const char t[] = "abc";
 
