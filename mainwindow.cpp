@@ -1,7 +1,9 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "viewer.h"
 #include "site_setting.h"
 #include "rand_gen.h"
+#include "test.h"
 
 #include <QMessageBox>
 #include <QStringList>
@@ -10,8 +12,10 @@
 #include <QTextStream>
 #include <QBitArray>
 #include <QDebug>
+#include <QDir>
 
-#include <iostream>#include <string.h>
+#include <iostream>
+#include <string.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -63,8 +67,11 @@ void MainWindow::on_GenDataBase_itemClicked(QListWidgetItem *item)
     ui->password_database->setItem(index, PASSWORD, new QTableWidgetItem(item->text()));
 }
 
+
+//
 void MainWindow::on_password_database_itemClicked(QTableWidgetItem *item)
 {
+    QString documentDir = "/home/shinpc/Documents/shincrypt/"; //document directory
     QString webSiteName = ui->password_database->item(item->row(), 0)->text();
     QString webSitePassword = ui->password_database->item(item->row(), 1)->text();
     QString filename = webSiteName + "@"
@@ -75,7 +82,13 @@ void MainWindow::on_password_database_itemClicked(QTableWidgetItem *item)
                      + QString::number(QTime::currentTime().minute())
                      + QString::number(QTime::currentTime().second())
                      + QString::number(QTime::currentTime().msec());
-    QFile save_file("/home/shinpc/Documents/"+filename);
+
+    //#####################Directory#########################
+    QDir dir(documentDir+webSiteName);
+    if(!dir.exists()) dir.mkpath(".");
+    //#######################################################
+
+    QFile save_file(documentDir+webSiteName+"/"+filename);
     if(ui->cryptCheck->isChecked()){
         if(!QString::compare(ui->keyInput->text(), "", Qt::CaseSensitive)) {
             QMessageBox::information(this, "Fail...", "You don't write key");
@@ -97,6 +110,7 @@ void MainWindow::on_password_database_itemClicked(QTableWidgetItem *item)
         }
         save_file.write(result, contents.size());
         delete[] result;
+        QMessageBox::information(this, "Finish!!", "Crypt done!!");
         save_file.close();
     }
     else{
@@ -112,7 +126,14 @@ void MainWindow::on_password_database_itemClicked(QTableWidgetItem *item)
         QMessageBox::information(this, "Complete!!", "Done!");
         save_file.close();
     }
-//    QMessageBox::information(this, "test", filename);
+//    std::cout << "result: " << test_funtion() << std::endl;
+//    QMessageBox::information(this, "test", "result"+test_funtion());
 //    QMessageBox::information(this, "Test!", ui->password_database->item(item->row(), (item->column()+1)%2)->text());
 
+}
+
+void MainWindow::on_decryptNowButton_clicked()
+{
+    viewer decryptViewer(this);
+    decryptViewer.exec();
 }

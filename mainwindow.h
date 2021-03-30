@@ -24,6 +24,8 @@ private slots:
 
     void on_password_database_itemClicked(QTableWidgetItem *item);
 
+    void on_decryptNowButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 

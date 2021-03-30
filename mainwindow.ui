@@ -96,18 +96,26 @@
      <string>Crypt</string>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1198</width>
-     <height>22</height>
-    </rect>
-   </property>
+   <widget class="QPushButton" name="decryptNowButton">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>40</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Viewer</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionFolder_Setting">
+   <property name="text">
+    <string>Folder Setting</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

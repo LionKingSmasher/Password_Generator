@@ -18,16 +18,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    site_setting.cpp
+    site_setting.cpp \
+    viewer.cpp
 
 HEADERS += \
     mainwindow.h \
     rand_gen.h \
-    site_setting.h
+    site_setting.h \
+    viewer.h
 
 FORMS += \
     mainwindow.ui \
-    site_setting.ui
+    site_setting.ui \
+    viewer.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
