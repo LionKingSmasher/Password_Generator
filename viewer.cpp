@@ -28,13 +28,14 @@ void viewer::on_pushButton_clicked()
     std::cout << dir.toStdString() << std::endl;
     QFile open_file(dir);
     QString contents;
+    char result[1024] = { 0, };
     if(!open_file.open(QIODevice::ReadOnly)){
         QMessageBox::information(this, "Fail", "File open error");
         return;
     }
     QTextStream in(&open_file);
-    while(!open_file.atEnd()){
-        contents += in.read(1);
+    for(qint64 i = 0; i < open_file.size(); i++){
+        contents += in.read(1).toStdString().c_str();
         std::cout << contents.toStdString() << std::endl;
     }
     ui->decryptViewer->setText(contents);
