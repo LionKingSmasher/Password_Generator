@@ -10,6 +10,7 @@ private:
 public:
     ShinCrypt();
     ~ShinCrypt();
+    void crypt();
 };
 
 #endif // CRYPT_H

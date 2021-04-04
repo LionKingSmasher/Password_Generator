@@ -1,6 +1,8 @@
 #include "viewer.h"
 #include "ui_viewer.h"
 
+#include <stdio.h>
+
 #include <QFileDialog>
 #include <QIODevice>
 #include <QMessageBox>
@@ -25,9 +27,10 @@ void viewer::on_pushButton_clicked()
 {
     ui->decryptViewer->clear(); //clear on viewer
     QString dir = QFileDialog::getOpenFileName(this, "File Selection", "/home/shinpc/Documents/shincrypt", "Files (*)");
-    std::cout << dir.toStdString() << std::endl;
+    //std::cout << dir.toStdString() << std::endl;
     QFile open_file(dir);
-    QString contents;
+    std::string key = ui->decryptCode->text().toStdString();
+    std::string contents;
     char result[1024] = { 0, };
     if(!open_file.open(QIODevice::ReadOnly)){
         QMessageBox::information(this, "Fail", "File open error");
@@ -35,8 +38,13 @@ void viewer::on_pushButton_clicked()
     }
     QTextStream in(&open_file);
     for(qint64 i = 0; i < open_file.size(); i++){
-        contents += in.read(1).toStdString().c_str();
-        std::cout << contents.toStdString() << std::endl;
+        contents += in.read(1).toStdString()[0] ^ key[i % key.size()];
+        key[i % key.size()] ^= key[i+1 % key.size()];
+        std::cout << contents << std::endl;
     }
-    ui->decryptViewer->setText(contents);
+    for(int i = 0; i < contents.size(); i++){
+        std::cout << std::hex << (int)contents[i] << std::endl;
+    }
+    //ui->decryptCode->text();
+    //ui->decryptViewer->setText(QString(contents.c_str()));
 }
